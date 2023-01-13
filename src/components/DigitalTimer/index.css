@@ -1,0 +1,169 @@
+/* Write your CSS here */
+.digital-Timer-bg-container {
+  background-image: linear-gradient(to right, #ffffff, #cffcf1);
+  background-size: cover;
+  height: 100vh;
+  padding: 35px;
+}
+
+.digital-Timer-heading {
+  font-family: 'Roboto';
+  font-size: 36px;
+  font-weight: 500;
+  color: #1e293b;
+  text-align: center;
+  padding-top: 25px;
+}
+
+.digital-timer-card-container {
+  margin-bottom: 38px;
+  display: flex;
+  justify-content: center;
+}
+
+.digital-timer-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/digital-timer-elapsed-bg.png');
+  background-size: cover;
+  height: 470px;
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  margin-bottom: 15px;
+}
+
+.timer-container {
+  border-radius: 90px;
+  background-color: #ffffff;
+  height: 140px;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-para {
+  font-family: 'Roboto';
+  font-size: 29px;
+  font-weight: bold;
+  color: #00d9f5;
+}
+
+.status-para {
+  font-family: 'Roboto';
+  font-size: 19px;
+  font-weight: 600;
+  color: #0f172a;
+  padding-left: 10px;
+}
+
+.reset-start-pause-container {
+  height: 200px;
+  margin-top: 147px;
+  margin-right: 100px;
+}
+
+.reset-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-pause-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 200px;
+}
+
+.start-pause-btn {
+  border-width: 0px;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+}
+
+.img-size {
+  height: 25px;
+  width: 25px;
+}
+
+.btn-para {
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  padding-left: 10px;
+}
+
+.reset-btn {
+  border-width: 0px;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+}
+
+.reset-img-size {
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+}
+
+.reset-btn-para {
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  padding-left: 10px;
+}
+
+.plus-minus-symbol-container {
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.minus-btn {
+  background-color: transparent;
+  border-width: 0;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.plus-btn {
+  background-color: transparent;
+  border-width: 0;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.number-para {
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: 500;
+  color: #0f172a;
+  background-image: linear-gradient(to left, #00d9f5, #5beec9);
+  border-radius: 4px;
+  height: 28px;
+  width: 68px;
+  text-align: center;
+  padding-top: 4px;
+  margin: 8px;
+}
+
+.set-timer-limit-para {
+  font-family: 'Roboto';
+  font-size: 10px;
+  font-weight: bold;
+  color: #0f172a;
+  text-align: center;
+}
