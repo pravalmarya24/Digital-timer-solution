@@ -13,7 +13,7 @@ class DigitalTimer extends Component {
 
   tikTok = () => {
     this.setState(prevState => ({
-      timeInSeconds: prevState.timeInSeconds + 1,
+      timerInSeconds: prevState.timerInSeconds + 1,
     }))
   }
 
