@@ -1,20 +1,67 @@
 import {Component} from 'react'
 import './index.css'
-import {format} from 'date-fns'
+
+const initialState = {
+  isActive: false,
+  timerInMinute: 25,
+  timerInSeconds: 0,
+}
+
 // Write your code here
 class DigitalTimer extends Component {
-  state = {isActive: false, date: new Date()}
+  state = initialState
 
-  onChangePlayPauseImg = () => {
+  tikTok = () => {
+    this.setState(prevState => ({
+      timeInSeconds: prevState.timeInSeconds + 1,
+    }))
+  }
+
+  onChangePlayPauseBtn = () => {
+    const {isActive} = this.state
+    console.log(isActive)
+    if (isActive === false) {
+      const intervalId = setInterval(this.tikTok(), 1000)
+    }
+
     this.setState(prevState => ({
       isActive: !prevState.isActive,
     }))
   }
 
+  getElapsedTime = () => {
+    const {timerInMinute, timerInSeconds} = this.state
+    const totalTimeRemaining = timerInMinute * 60 - timerInSeconds
+    const minutes = Math.floor(totalTimeRemaining / 60)
+    const seconds = Math.floor(totalTimeRemaining % 60)
+
+    const stringifyMinutes = minutes < 10 ? `0${minutes}` : minutes
+    const stringifyseconds = seconds < 10 ? `0${seconds}` : seconds
+
+    return `${stringifyMinutes} : ${stringifyseconds}`
+  }
+
+  onDecrementMinutes = () => {
+    const {timerInMinute} = this.state
+    if (timerInMinute === 0) {
+      this.setState({
+        timerInMinute: 0,
+      })
+    } else {
+      this.setState(prevState => ({
+        timerInMinute: prevState.timerInMinute - 1,
+      }))
+    }
+  }
+
+  onIncrementMinutes = () => {
+    this.setState(prevState => ({
+      timerInMinute: prevState.timerInMinute + 1,
+    }))
+  }
+
   render() {
-    const {isActive, date} = this.state
-    const newDate = format(date, 'yyyy:MM:dd h:mm')
-    console.log(newDate)
+    const {isActive, timerInMinute} = this.state
     const image = isActive
       ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
@@ -28,7 +75,7 @@ class DigitalTimer extends Component {
           <div className="digital-timer-container">
             <div className="timer-container">
               <p className="timer-para">
-                {newDate.toLocalTimeString()} <br />
+                {this.getElapsedTime()} <br />
                 <span className="status-para">status</span>
               </p>
             </div>
@@ -38,7 +85,7 @@ class DigitalTimer extends Component {
               <button
                 className="start-pause-btn"
                 type="button"
-                onClick={this.onChangePlayPauseImg}
+                onClick={this.onChangePlayPauseBtn}
               >
                 <img src={image} alt="play icon" className="img-size" />
               </button>
@@ -54,11 +101,19 @@ class DigitalTimer extends Component {
             </div>
             <p className="set-timer-limit-para">Set Timer Limit</p>
             <div className="plus-minus-symbol-container">
-              <button className="minus-btn" type="button">
+              <button
+                className="minus-btn"
+                type="button"
+                onClick={this.onDecrementMinutes}
+              >
                 -
               </button>
-              <p className="number-para">45</p>
-              <button className="plus-btn" type="button">
+              <p className="number-para">{timerInMinute}</p>
+              <button
+                className="plus-btn"
+                type="button"
+                onClick={this.onIncrementMinutes}
+              >
                 +
               </button>
             </div>
