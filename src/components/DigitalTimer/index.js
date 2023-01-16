@@ -11,6 +11,14 @@ const initialState = {
 class DigitalTimer extends Component {
   state = initialState
 
+  componentWillUnmount() {
+    this.clearTimerInterval()
+  }
+
+  clearTimerInterval = () => {
+    clearInterval(this.intervalId)
+  }
+
   tikTok = () => {
     this.setState(prevState => ({
       timerInSeconds: prevState.timerInSeconds + 1,
@@ -18,10 +26,17 @@ class DigitalTimer extends Component {
   }
 
   onChangePlayPauseBtn = () => {
-    const {isActive} = this.state
-    console.log(isActive)
-    if (isActive === false) {
-      const intervalId = setInterval(this.tikTok(), 1000)
+    const {isActive, timerInMinute, timerInSeconds} = this.state
+    const isTimerCompleted = timerInSeconds === timerInMinute * 60
+
+    if (isTimerCompleted) {
+      this.setState({timerInSeconds: 0})
+    }
+
+    if (isActive) {
+      clearInterval(this.intervalId)
+    } else {
+      this.intervalId = setInterval(this.tikTok, 1000)
     }
 
     this.setState(prevState => ({
@@ -60,13 +75,20 @@ class DigitalTimer extends Component {
     }))
   }
 
+  onResetTimerAndStatus = () => {
+    this.setState({timerInMinute: 25, timerInSeconds: 0, isActive: false})
+    this.clearTimerInterval()
+  }
+
   render() {
-    const {isActive, timerInMinute} = this.state
+    const {isActive, timerInMinute, timerInSeconds} = this.state
+    const isDisabled = timerInSeconds > 0
     const image = isActive
       ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
 
     const startPauseOption = isActive ? 'Pause' : 'Start'
+    const runningPause = isActive ? 'Running' : 'Pause'
 
     return (
       <div className="digital-Timer-bg-container">
@@ -76,7 +98,7 @@ class DigitalTimer extends Component {
             <div className="timer-container">
               <p className="timer-para">
                 {this.getElapsedTime()} <br />
-                <span className="status-para">status</span>
+                <span className="status-para">{runningPause}</span>
               </p>
             </div>
           </div>
@@ -95,6 +117,7 @@ class DigitalTimer extends Component {
                   src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
                   alt="reset icon"
                   className="reset-img-size"
+                  onClick={this.onResetTimerAndStatus}
                 />
               </button>
               <p className="reset-btn-para">Reset</p>
@@ -105,6 +128,7 @@ class DigitalTimer extends Component {
                 className="minus-btn"
                 type="button"
                 onClick={this.onDecrementMinutes}
+                disabled={isActive}
               >
                 -
               </button>
@@ -113,6 +137,7 @@ class DigitalTimer extends Component {
                 className="plus-btn"
                 type="button"
                 onClick={this.onIncrementMinutes}
+                disabled={isActive}
               >
                 +
               </button>
