@@ -20,9 +20,17 @@ class DigitalTimer extends Component {
   }
 
   tikTok = () => {
-    this.setState(prevState => ({
-      timerInSeconds: prevState.timerInSeconds + 1,
-    }))
+    const {timerInMinute, timerInSeconds} = this.state
+    const isTimerCompleted = timerInSeconds === timerInMinute * 60
+
+    if (isTimerCompleted) {
+      this.clearTimerInterval()
+      this.setState({isActive: false})
+    } else {
+      this.setState(prevState => ({
+        timerInSeconds: prevState.timerInSeconds + 1,
+      }))
+    }
   }
 
   onChangePlayPauseBtn = () => {
@@ -34,7 +42,7 @@ class DigitalTimer extends Component {
     }
 
     if (isActive) {
-      clearInterval(this.intervalId)
+      this.clearTimerInterval()
     } else {
       this.intervalId = setInterval(this.tikTok, 1000)
     }
@@ -81,14 +89,14 @@ class DigitalTimer extends Component {
   }
 
   render() {
-    const {isActive, timerInMinute, timerInSeconds} = this.state
-    const isDisabled = timerInSeconds > 0
+    const {isActive, timerInMinute} = this.state
     const image = isActive
       ? 'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
       : 'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+    const altValue = isActive ? 'pause icon' : 'play icon'
 
     const startPauseOption = isActive ? 'Pause' : 'Start'
-    const runningPause = isActive ? 'Running' : 'Pause'
+    const runningPause = isActive ? 'Running' : 'Paused'
 
     return (
       <div className="digital-Timer-bg-container">
@@ -96,10 +104,10 @@ class DigitalTimer extends Component {
         <div className="digital-timer-card-container">
           <div className="digital-timer-container">
             <div className="timer-container">
-              <p className="timer-para">
+              <h1 className="timer-para">
                 {this.getElapsedTime()} <br />
                 <span className="status-para">{runningPause}</span>
-              </p>
+              </h1>
             </div>
           </div>
           <div className="reset-start-pause-container">
@@ -109,7 +117,7 @@ class DigitalTimer extends Component {
                 type="button"
                 onClick={this.onChangePlayPauseBtn}
               >
-                <img src={image} alt="play icon" className="img-size" />
+                <img src={image} alt={altValue} className="img-size" />
               </button>
               <p className="btn-para">{startPauseOption}</p>
               <button className="reset-btn" type="button">
